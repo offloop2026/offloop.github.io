@@ -6,30 +6,100 @@ backend:
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
+site_url: "https://offloop2026.github.io"
+display_url: "https://offloop2026.github.io"
+
 collections:
+
+  # ========================================
+  # 전시
+  # ========================================
 
   - name: "exhibitions"
     label: "전시"
+    label_singular: "전시"
     folder: "content/exhibitions"
     create: true
     slug: "{{year}}-{{slug}}"
+
     fields:
-      - {label: "전시명", name: "title", widget: "string"}
-      - {label: "연도", name: "year", widget: "number"}
-      - {label: "장소", name: "venue", widget: "string", required: false}
-      - {label: "대표 이미지", name: "thumbnail", widget: "image"}
-      - {label: "추가 이미지", name: "gallery", widget: "list", field: {label: "이미지", name: "image", widget: "image"}, required: false}
-      - {label: "설명", name: "description", widget: "markdown", required: false}
+
+      - label: "전시명"
+        name: "title"
+        widget: "string"
+
+      - label: "연도"
+        name: "year"
+        widget: "number"
+
+      - label: "장소"
+        name: "venue"
+        widget: "string"
+        required: false
+
+      - label: "대표 이미지"
+        name: "thumbnail"
+        widget: "image"
+        required: false
+
+      - label: "전시 이미지"
+        name: "images"
+        widget: "list"
+        required: false
+        field:
+          label: "이미지"
+          name: "image"
+          widget: "image"
+
+      - label: "전시 설명"
+        name: "description"
+        widget: "markdown"
+        required: false
+
+
+  # ========================================
+  # 아카이브
+  # ========================================
 
   - name: "archive"
     label: "아카이브"
+    label_singular: "작품"
     folder: "content/archive"
     create: true
     slug: "{{year}}-{{slug}}"
+
     fields:
-      - {label: "작품명", name: "title", widget: "string"}
-      - {label: "연도", name: "year", widget: "number"}
-      - {label: "카테고리", name: "category", widget: "select", options: ["눈자리나게"]}
-      - {label: "대표 이미지", name: "thumbnail", widget: "image"}
-      - {label: "추가 이미지", name: "gallery", widget: "list", field: {label: "이미지", name: "image", widget: "image"}, required: false}
-      - {label: "설명", name: "description", widget: "markdown", required: false}
+
+      - label: "작품명"
+        name: "title"
+        widget: "string"
+
+      - label: "연도"
+        name: "year"
+        widget: "number"
+
+      - label: "카테고리"
+        name: "category"
+        widget: "select"
+        options:
+          - label: "눈자리나게"
+            value: "눈자리나게"
+        default: "눈자리나게"
+
+      - label: "대표 이미지"
+        name: "thumbnail"
+        widget: "image"
+
+      - label: "추가 이미지"
+        name: "images"
+        widget: "list"
+        required: false
+        field:
+          label: "이미지"
+          name: "image"
+          widget: "image"
+
+      - label: "작품 설명"
+        name: "description"
+        widget: "markdown"
+        required: false

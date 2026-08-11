@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maxfolio Style Photo Archive & Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0b0c0e;
+      --card-bg: #14161a;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent: #ffffff;
+      --accent-badge: #1f232b;
+      --tag-bg: rgba(255, 255, 255, 0.06);
+      --tag-text: #d1d5db;
+      --overlay-bg: rgba(11, 12, 14, 0.92);
+      --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-color: #f7f8fa;
+      --card-bg: #ffffff;
+      --card-border: rgba(0, 0, 0, 0.08);
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --accent: #000000;
+      --accent-badge: #f0f1f5;
+      --tag-bg: rgba(0, 0, 0, 0.05);
+      --tag-text: #374151;
+      --overlay-bg: rgba(247, 248, 250, 0.94);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.5;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(11, 12, 14, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      transition: background-color 0.4s ease;
+    }
+    [data-theme="light"] header {
+      background-color: rgba(247, 248, 250, 0.8);
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+    }
+
+    .brand-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      text-decoration: none;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-badge {
+      font-size: 0.75rem;
+      background: var(--accent-badge);
+      color: var(--text-muted);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+    }
+
+    .theme-toggle-btn {
+      background: var(--accent-badge);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .theme-toggle-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .hero {
+      padding: 5rem 0 3.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      max-width: 900px;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin-bottom: 2.5rem;
+    }
+
+    .controls-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition-smooth);
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--text-main);
+      color: var(--bg-color);
+      border-color: var(--text-main);
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 260px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 10px 16px 10px 42px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .grid-section {
+      padding: 3rem 0 6rem;
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 2rem;
+    }
+
+    .archive-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .archive-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .card-thumb-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 66.66%;
+      overflow: hidden;
+      background-color: var(--accent-badge);
+    }
+
+    .card-thumb {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .archive-card:hover .card-thumb {
+      transform: scale(1.06);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: var(--overlay-bg);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      max-width: 1000px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--accent-badge);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .modal-img-container {
+      width: 100%;
+      max-height: 550px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-content {
+      padding: 2.5rem;
+    }
+
+    .modal-header-meta {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-desc-full {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .modal-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      background: var(--accent-badge);
+      padding: 1.5rem;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+    }
+
+    .info-item label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .info-item span {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 4rem 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 1.25rem; }
+      .archive-grid { grid-template-columns: 1fr; }
+      .controls-wrapper { flex-direction: column; align-items: stretch; }
+      .search-box { width: 100%; }
+      .hero { padding: 3rem 0 2rem; }
+      .modal-content { padding: 1.5rem; }
+      .modal-title { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <header>
+    <div class="container nav-wrapper">
+      <a href="#" class="brand-logo">
+        MAXFOLIO <span class="brand-badge">ARCHIVE</span>
+      </a>
+      <div class="nav-right">
+        <div class="status-indicator">
+          <span class="dot"></span>
+          <span>Live Archive</span>
+        </div>
+        <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
+          <svg id="themeIcon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8.66-8.66h-1M4.34 12h-1m15.36 6.36l-.7-.7M6.34 6.34l-.7-.7m12.72 0l-.7.7M6.34 17.66l-.7.7M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1 class="hero-title">Visual Moments & Photography Archive</h1>
+      <p class="hero-desc">사진, 공간, 디자인 작업을 기록하는 미니멀 고대비 아카이브 공간입니다.</p>
+
+      <div class="controls-wrapper">
+        <div class="filter-group">
+          <button class="filter-btn active" data-filter="all">All Shots</button>
+          <button class="filter-btn" data-filter="landscape">Landscape</button>
+          <button class="filter-btn" data-filter="architecture">Architecture</button>
+          <button class="filter-btn" data-filter="portrait">Portrait</button>
+          <button class="filter-btn" data-filter="film">Film</button>
+        </div>
+        <div class="search-box">
+          <svg class="search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="검색어 또는 태그 입력...">
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-section">
+      <div class="archive-grid" id="archiveGrid"></div>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modalClose">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <div class="modal-img-container">
+        <img src="" alt="" class="modal-img" id="modalImg">
+      </div>
+      <div class="modal-content">
+        <div class="modal-header-meta">
+          <span id="modalCategory" style="font-weight:700; color:var(--text-main);">CATEGORY</span>
+          <span>•</span>
+          <span id="modalDate">DATE</span>
+        </div>
+        <h2 class="modal-title" id="modalTitle">Title</h2>
+        <p class="modal-desc-full" id="modalDesc">Detailed description text goes here.</p>
+        
+        <div class="modal-info-grid">
+          <div class="info-item">
+            <label>Location</label>
+            <span id="modalLocation">Location Info</span>
+          </div>
+          <div class="info-item">
+            <label>Camera / Gear</label>
+            <span id="modalGear">Gear Specs</span>
+          </div>
+          <div class="info-item">
+            <label>Tags</label>
+            <span id="modalTags">Tags</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-content">
+      <div>
+        <p>© 2026 Maxfolio Photo Archive. Powered by GitHub Pages.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const archives = [
+      {
+        id: 1,
+        title: "Monochrome Concrete & Shadows",
+        category: "architecture",
+        date: "2026.07.14",
+        badge: "ARCH",
+        image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
+        desc: "미니멀한 콘크리트 건축물과 강렬한 빛이 만들어내는 대치 구조를 담은 건축 아카이브입니다.",
+        location: "Seoul, South Korea",
+        gear: "Leica Q2 / 28mm Summilux",
+        tags: ["Architecture", "Black&White", "Minimal"]
+      },
+      {
+        id: 2,
+        title: "Silence Over Misty Peaks",
+        category: "landscape",
+        date: "2026.06.28",
+        badge: "LANDSCAPE",
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+        desc: "이른 아침 산마루를 감싸는 안개와 산수의 곡선을 프레임에 기록한 풍경 사진입니다.",
+        location: "Gangwon, South Korea",
+        gear: "Sony A7R V / FE 24-70mm GM II",
+        tags: ["Landscape", "Misty", "Nature"]
+      },
+      {
+        id: 3,
+        title: "Night Neon Silhouette",
+        category: "portrait",
+        date: "2026.05.19",
+        badge: "PORTRAIT",
+        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80",
+        desc: "도시의 네온사인 조명 아래 펼쳐지는 실루엣과 인물의 스토리를 담은 포트레이트 작품.",
+        location: "Tokyo, Japan",
+        gear: "Fujifilm X-T5 / XF 35mm F1.4",
+        tags: ["Portrait", "Neon", "City"]
+      },
+      {
+        id: 4,
+        title: "Grain & Warm Horizon",
+        category: "film",
+        date: "2026.04.05",
+        badge: "FILM",
+        image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80",
+        desc: "35mm 필름 특유의 입자감과 일몰 직전의 따뜻한 감성을 스캔한 필름 아카이브 프로젝트.",
+        location: "Jeju, South Korea",
+        gear: "Contax T2 / Kodak Portra 400",
+        tags: ["Film", "Sunset", "Analog"]
+      }
+    ];
+
+    const gridEl = document.getElementById('archiveGrid');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('searchInput');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCategory = document.getElementById('modalCategory');
+    const modalDate = document.getElementById('modalDate');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalLocation = document.getElementById('modalLocation');
+    const modalGear = document.getElementById('modalGear');
+    const modalTags = document.getElementById('modalTags');
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    function renderGrid() {
+      gridEl.innerHTML = '';
+      const filtered = archives.filter(item => {
+        const matchesCategory = currentFilter === 'all' || item.category === currentFilter;
+        const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                              item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        gridEl.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 5rem 0; color: var(--text-muted);">검색 결과가 없습니다.</div>`;
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'archive-card';
+        card.onclick = () => openModal(item);
+
+        card.innerHTML = `
+          <div class="card-thumb-wrapper">
+            <span class="card-badge">${item.badge}</span>
+            <img src="${item.image}" alt="${item.title}" class="card-thumb" loading="lazy">
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="card-meta">
+                <span>${item.date}</span>
+                <span>${item.location.split(',')[0]}</span>
+              </div>
+              <h3 class="card-title">${item.title}</h3>
+              <p class="card-desc">${item.desc}</p>
+            </div>
+            <div class="card-tags">
+              ${item.tags.map(t => `<span class="tag">#${t}</span>`).join('')}
+            </div>
+          </div>
+        `;
+        gridEl.appendChild(card);
+      });
+    }
+
+    function openModal(item) {
+      modalImg.src = item.image;
+      modalTitle.textContent = item.title;
+      modalCategory.textContent = item.badge;
+      modalDate.textContent = item.date;
+      modalDesc.textContent = item.desc;
+      modalLocation.textContent = item.location;
+      modalGear.textContent = item.gear;
+      modalTags.textContent = item.tags.map(t => `#${t}`).join(' ');
+
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    modalClose.onclick = closeModal;
+    modalOverlay.onclick = (e) => {
+      if (e.target === modalOverlay) closeModal();
+    };
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        renderGrid();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderGrid();
+    });
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', newTheme);
+
+      if (newTheme === 'light') {
+        themeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>`;
+      } else {
+        themeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8.66-8.66h-1M4.34 12h-1m15.36 6.36l-.7-.7M6.34 6.34l-.7-.7m12.72 0l-.7.7M6.34 17.66l-.7.7M12 8a4 4 0 100 8 4 4 0 000-8z"/>`;
+      }
+    });
+
+    renderGrid();
+  </script>
+</body>
+</html>

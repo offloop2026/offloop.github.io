@@ -2,7 +2,7 @@ backend:
   name: github
   repo: glassgkim/offloop2026.github.io
   branch: main
-  base_url: https://decap-cms-oauth-provider.vercel.app
+  auth_type: implicit
 
 media_folder: "assets/images"
 public_folder: "/assets/images"

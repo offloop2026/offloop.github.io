@@ -291,3 +291,91 @@ async function router(){
 
 window.addEventListener("hashchange",router);
 router();
+
+// Pull-to-Refresh implementation for Archive page
+let startY = 0;
+let isPulling = false;
+let ptrIndicator = null;
+const THRESHOLD = 80;
+
+function handleTouchStart(e) {
+  if (!location.hash.startsWith("#/archive")) return;
+  if (window.scrollY > 5) return;
+  
+  const touch = e.touches[0];
+  startY = touch.clientY;
+  isPulling = true;
+  
+  if (!ptrIndicator) {
+    ptrIndicator = document.createElement("div");
+    ptrIndicator.className = "pull-to-refresh-indicator";
+    ptrIndicator.innerText = "당겨서 새로고침";
+    document.body.appendChild(ptrIndicator);
+  }
+}
+
+function handleTouchMove(e) {
+  if (!isPulling || !ptrIndicator) return;
+  if (!location.hash.startsWith("#/archive")) return;
+  if (window.scrollY > 5) {
+    isPulling = false;
+    ptrIndicator.style.top = "-50px";
+    ptrIndicator.style.opacity = "0";
+    return;
+  }
+  
+  const touch = e.touches[0];
+  const diffY = touch.clientY - startY;
+  
+  if (diffY > 0) {
+    if (e.cancelable) e.preventDefault();
+    const dragDistance = Math.min(120, diffY);
+    ptrIndicator.style.top = `${-40 + dragDistance * 0.5}px`;
+    ptrIndicator.style.opacity = `${Math.min(1, dragDistance / THRESHOLD)}`;
+    
+    if (diffY >= THRESHOLD) {
+      ptrIndicator.innerText = "놓아서 새로고침";
+      ptrIndicator.classList.add("active");
+    } else {
+      ptrIndicator.innerText = "당겨서 새로고침";
+      ptrIndicator.classList.remove("active");
+    }
+  } else {
+    isPulling = false;
+    ptrIndicator.style.top = "-50px";
+    ptrIndicator.style.opacity = "0";
+  }
+}
+
+function handleTouchEnd(e) {
+  if (!isPulling || !ptrIndicator) return;
+  isPulling = false;
+  
+  const touch = e.changedTouches[0];
+  const diffY = touch.clientY - startY;
+  
+  if (diffY >= THRESHOLD) {
+    ptrIndicator.innerText = "새로고침 중…";
+    ptrIndicator.style.top = "16px";
+    ptrIndicator.style.opacity = "1";
+    
+    const parts = decodeURIComponent(location.hash.replace(/^#\/?/,"")).split("/").filter(Boolean);
+    const category = parts[1] || "all";
+    
+    renderArchive(category).then(() => {
+      setTimeout(() => {
+        if (ptrIndicator) {
+          ptrIndicator.style.top = "-50px";
+          ptrIndicator.style.opacity = "0";
+        }
+      }, 400);
+    });
+  } else {
+    ptrIndicator.style.top = "-50px";
+    ptrIndicator.style.opacity = "0";
+  }
+}
+
+window.addEventListener("touchstart", handleTouchStart, { passive: false });
+window.addEventListener("touchmove", handleTouchMove, { passive: false });
+window.addEventListener("touchend", handleTouchEnd, { passive: false });

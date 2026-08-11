@@ -202,6 +202,13 @@ async function renderArchive(category="all"){
   const entries=await getCollection("archive");
   const filtered=category==="all" ? entries : entries.filter(x=>x.data.category===category);
   
+  // Dynamic shuffle of works array (Fisher-Yates)
+  const shuffled = [...filtered];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  
   const isMobile = window.innerWidth <= 600;
   const isTablet = window.innerWidth > 600 && window.innerWidth <= 1024;
   
@@ -213,7 +220,7 @@ async function renderArchive(category="all"){
   
   let maxTopY = 0;
   
-  const cardsHtml = filtered.map((x, idx) => {
+  const cardsHtml = shuffled.map((x, idx) => {
     let cardWidthPct;
     if (isMobile) {
       cardWidthPct = 45 + Math.random() * 25; // 45% to 70%

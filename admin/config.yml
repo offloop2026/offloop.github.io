@@ -2,7 +2,7 @@ backend:
   name: github
   repo: glassgkim/offloop2026.github.io
   branch: main
-  auth_type: implicit
+  base_url: https://sstaticgate.vercel.app
 
 media_folder: "assets/images"
 public_folder: "/assets/images"

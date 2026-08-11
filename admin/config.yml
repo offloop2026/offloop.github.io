@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: glassgkim/offloop2026.github.io
+  name: git-gateway
   branch: main
 
 media_folder: "assets/images"

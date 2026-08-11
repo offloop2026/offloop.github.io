@@ -1,11 +1,119 @@
 {
   "archive": [
     {
+      "slug": "나열된 건물과 하강하는 길",
+      "filename": "나열된 건물과 하강하는 길.json",
+      "data": {
+        "title": "나열된 건물과 하강하는 길",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/나열된 건물과 하강하는 길.jpg"
+      }
+    },
+    {
+      "slug": "덧대어진 박공지붕",
+      "filename": "덧대어진 박공지붕.json",
+      "data": {
+        "title": "덧대어진 박공지붕",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/덧대어진 박공지붕.jpg"
+      }
+    },
+    {
+      "slug": "땅과 땅",
+      "filename": "땅과 땅.json",
+      "data": {
+        "title": "땅과 땅",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/땅과 땅.jpg"
+      }
+    },
+    {
+      "slug": "마모되고 남은 기둥",
+      "filename": "마모되고 남은 기둥.json",
+      "data": {
+        "title": "마모되고 남은 기둥",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/마모되고 남은 기둥.jpg"
+      }
+    },
+    {
+      "slug": "빗금친 땅과 포개진 땅",
+      "filename": "빗금친 땅과 포개진 땅.json",
+      "data": {
+        "title": "빗금친 땅과 포개진 땅",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/빗금친 땅과 포개진 땅.jpg"
+      }
+    },
+    {
+      "slug": "빗대어 기댄 건물과 담쟁이 식물",
+      "filename": "빗대어 기댄 건물과 담쟁이 식물.json",
+      "data": {
+        "title": "빗대어 기댄 건물과 담쟁이 식물",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/빗대어 기댄 건물과 담쟁이 식물.jpg"
+      }
+    },
+    {
+      "slug": "빗대어진 벽",
+      "filename": "빗대어진 벽.json",
+      "data": {
+        "title": "빗대어진 벽",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/빗대어진 벽.jpg"
+      }
+    },
+    {
+      "slug": "뾰족한 지붕과 지붕",
+      "filename": "뾰족한 지붕과 지붕.json",
+      "data": {
+        "title": "뾰족한 지붕과 지붕",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/뾰족한 지붕과 지붕.jpg"
+      }
+    },
+    {
+      "slug": "손끝으로 시간을 축적하는 일",
+      "filename": "손끝으로 시간을 축적하는 일.json",
+      "data": {
+        "title": "손끝으로 시간을 축적하는 일",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/손끝으로 시간을 축적하는 일.jpg"
+      }
+    },
+    {
+      "slug": "알수없음의 조각상",
+      "filename": "알수없음의 조각상.json",
+      "data": {
+        "title": "알수없음의 조각상",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/알수없음의 조각상.jpg"
+      }
+    },
+    {
+      "slug": "창문 무늬",
+      "filename": "창문 무늬.json",
+      "data": {
+        "title": "창문 무늬",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/창문 무늬.jpg"
+      }
+    },
+    {
+      "slug": "항구와 남은 것",
+      "filename": "항구와 남은 것.json",
+      "data": {
+        "title": "항구와 남은 것",
+        "category": "눈자리나게, 이어",
+        "image": "assets/images/archive/항구와 남은 것 .jpg"
+      }
+    },
+    {
       "slug": "공포와_가구식구조",
       "filename": "공포와_가구식구조.json",
       "data": {
         "title": "공포와_가구식구조",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_04_공포와_가구식구조.jpg"
       }
     },
@@ -14,7 +122,7 @@
       "filename": "처마와_케이블_덧대고_또_덧대기.json",
       "data": {
         "title": "처마와_케이블_덧대고_또_덧대기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_05_처마와_케이블_덧대고_또_덧대기.jpg"
       }
     },
@@ -23,7 +131,7 @@
       "filename": "석등_마주보며_쓰다듬기.json",
       "data": {
         "title": "석등_마주보며_쓰다듬기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_06_석등_마주보며_쓰다듬기.jpg"
       }
     },
@@ -32,7 +140,7 @@
       "filename": "수면과_능선_머금으며_겹치기.json",
       "data": {
         "title": "수면과_능선_머금으며_겹치기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_07_수면과_능선_머금으며_겹치기.jpg"
       }
     },
@@ -41,7 +149,7 @@
       "filename": "공포_눈자리_나게_잇기.json",
       "data": {
         "title": "공포_눈자리_나게_잇기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_08_공포_눈자리_나게_잇기.jpg"
       }
     },
@@ -50,7 +158,7 @@
       "filename": "조적창고와_갠트리크레인.json",
       "data": {
         "title": "조적창고와_갠트리크레인",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_09_조적창고와_갠트리크레인.jpg"
       }
     },
@@ -59,7 +167,7 @@
       "filename": "조계지_경계계단과_석등.json",
       "data": {
         "title": "조계지_경계계단과_석등",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_10_조계지_경계계단과_석등.jpg"
       }
     },
@@ -68,7 +176,7 @@
       "filename": "부두_크레인과_컨테이너적층.json",
       "data": {
         "title": "부두_크레인과_컨테이너적층",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_11_부두_크레인과_컨테이너적층.jpg"
       }
     },
@@ -77,7 +185,7 @@
       "filename": "석조은행_필라스터와_돔.json",
       "data": {
         "title": "석조은행_필라스터와_돔",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_12_석조은행_필라스터와_돔.jpg"
       }
     },
@@ -86,7 +194,7 @@
       "filename": "창고내부_킹포스트트러스.json",
       "data": {
         "title": "창고내부_킹포스트트러스",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_13_창고내부_킹포스트트러스.jpg"
       }
     },
@@ -95,7 +203,7 @@
       "filename": "첨두아치창_연작.json",
       "data": {
         "title": "첨두아치창_연작",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_14_첨두아치창_연작.jpg"
       }
     },
@@ -104,7 +212,7 @@
       "filename": "개항장_종합조망.json",
       "data": {
         "title": "개항장_종합조망",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_15_개항장_종합조망.jpg"
       }
     },
@@ -113,7 +221,7 @@
       "filename": "격자천장_비워서_밝히기.json",
       "data": {
         "title": "격자천장_비워서_밝히기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_16_격자천장_비워서_밝히기.jpg"
       }
     },
@@ -122,7 +230,7 @@
       "filename": "재현다방_액자벽과_전구.json",
       "data": {
         "title": "재현다방_액자벽과_전구",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_17_재현다방_액자벽과_전구.jpg"
       }
     },
@@ -131,7 +239,7 @@
       "filename": "사고석_옹벽_결_따라_긋고_전선_걸기.json",
       "data": {
         "title": "사고석_옹벽_결_따라_긋고_전선_걸기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_18_사고석_옹벽_결_따라_긋고_전선_걸기.jpg"
       }
     },
@@ -140,7 +248,7 @@
       "filename": "한옥_호살_파사드.json",
       "data": {
         "title": "한옥_호살_파사드",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_19_한옥_창호살_파사드.jpg"
       }
     },
@@ -149,7 +257,7 @@
       "filename": "유리블록_벽등_어둠을_덮고_빛만_남기기.json",
       "data": {
         "title": "유리블록_벽등_어둠을_덮고_빛만_남기기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_20_유리블록_벽등_어둠을_덮고_빛만_남기기.jpg"
       }
     },
@@ -158,7 +266,7 @@
       "filename": "옻칠_우물반자_시선을_위로.json",
       "data": {
         "title": "옻칠_우물반자_시선을_위로",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_21_옻칠_우물반자_시선을_위로.jpg"
       }
     },
@@ -167,7 +275,7 @@
       "filename": "흑벽돌과_배관계량기.json",
       "data": {
         "title": "흑벽돌과_배관계량기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_22_흑벽돌과_배관계량기.jpg"
       }
     },
@@ -176,7 +284,7 @@
       "filename": "막돌허튼층_석축_어긋나게_쌓기.json",
       "data": {
         "title": "막돌허튼층_석축_어긋나게_쌓기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_23_막돌허튼층_석축_어긋나게_쌓기.jpg"
       }
     },
@@ -185,7 +293,7 @@
       "filename": "서양식_몰딩과_샹들리에.json",
       "data": {
         "title": "서양식_몰딩과_샹들리에",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_24_서양식_몰딩과_샹들리에.jpg"
       }
     },
@@ -194,7 +302,7 @@
       "filename": "바카운터_반복원근.json",
       "data": {
         "title": "바카운터_반복원근",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_25_바카운터_반복원근.jpg"
       }
     },
@@ -203,7 +311,7 @@
       "filename": "창_속의_창_겹쳐서_바라보기.json",
       "data": {
         "title": "창_속의_창_겹쳐서_바라보기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_26_창_속의_창_겹쳐서_바라보기.jpg"
       }
     },
@@ -212,7 +320,7 @@
       "filename": "정자_격자_사이로_바라보기.json",
       "data": {
         "title": "정자_격자_사이로_바라보기",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_27_정자_격자_사이로_바라보기.jpg"
       }
     },
@@ -221,7 +329,7 @@
       "filename": "살대콘솔과_벽감.json",
       "data": {
         "title": "살대콘솔과_벽감",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_28_살대콘솔과_벽감.jpg"
       }
     },
@@ -230,7 +338,7 @@
       "filename": "갤러리_살대미닫이.json",
       "data": {
         "title": "갤러리_살대미닫이",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_29_갤러리_살대미닫이.jpg"
       }
     },
@@ -239,7 +347,7 @@
       "filename": "처마와_케이블_수평추진.json",
       "data": {
         "title": "처마와_케이블_수평추진",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_01_처마와_케이블_수평추진.jpg"
       }
     },
@@ -248,7 +356,7 @@
       "filename": "석등과_청회색덩어리.json",
       "data": {
         "title": "석등과_청회색덩어리",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_02_석등과_청회색덩어리.jpg"
       }
     },
@@ -257,7 +365,7 @@
       "filename": "수면과_능선.json",
       "data": {
         "title": "수면과_능선",
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "image": "assets/images/archive/인천개항장_리서치드로잉_03_수면과_능선.jpg"
       }
     },
@@ -267,7 +375,7 @@
       "data": {
         "title": "작품 제목을 수정하세요",
         "year": 2026,
-        "category": "눈자리나게",
+        "category": "눈자리나게, 이어",
         "thumbnail": "",
         "gallery": [],
         "description": "이 글은 예시입니다. Decap CMS에서 수정하거나 삭제하세요."

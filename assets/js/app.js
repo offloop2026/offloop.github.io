@@ -45,7 +45,7 @@ async function readContentFile(path){
       const mappedData = {
         title: data.title || "",
         year: data.year || "",
-        category: data.category || "눈자리나게",
+        category: data.category || "눈자리나게, 이어",
         venue: data.venue || "",
         thumbnail: data.image || data.thumbnail || "",
         gallery: data.gallery || [],
@@ -80,7 +80,7 @@ async function getCollection(type){
       const mappedData = {
         title: d.title || "",
         year: d.year || "",
-        category: d.category || "눈자리나게",
+        category: d.category || "눈자리나게, 이어",
         venue: d.venue || "",
         thumbnail: d.image || d.thumbnail || "",
         gallery: d.gallery || [],
@@ -205,13 +205,13 @@ async function renderArchive(category="all"){
     <div class="page-head"><h1 class="page-title">ARCHIVE</h1><p class="page-note">작업과 기록</p></div>
     <div class="filters">
       <button class="filter ${category==="all"?"active":""}" data-cat="all">전체</button>
-      <button class="filter ${category==="눈자리나게"?"active":""}" data-cat="눈자리나게">눈자리나게</button>
+      <button class="filter ${category==="눈자리나게, 이어"?"active":""}" data-cat="눈자리나게, 이어">눈자리나게, 이어</button>
     </div>
     <div class="masonry">${filtered.map(x=>card(x,"archive")).join("") || '<p class="empty">이 카테고리에 등록된 작업이 없습니다.</p>'}</div>
   </section>`;
   document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{
     const cat=btn.dataset.cat;
-    location.hash=cat==="눈자리나게" ? "#/archive/눈자리나게" : "#/archive";
+    location.hash=cat==="눈자리나게, 이어" ? "#/archive/눈자리나게, 이어" : "#/archive";
   }));
 }
 

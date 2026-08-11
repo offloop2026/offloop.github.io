@@ -208,6 +208,9 @@ async function renderArchive(category="all"){
   const C = isMobile ? 1 : (isTablet ? 2 : 3);
   const rowHeight = isMobile ? 240 : (isTablet ? 380 : 480);
   
+  // Starting offset to let the first row scatter organically without clipping at 0px
+  const startOffsetY = isMobile ? 10 : (isTablet ? 30 : 40);
+  
   let maxTopY = 0;
   
   const cardsHtml = filtered.map((x, idx) => {
@@ -225,10 +228,10 @@ async function renderArchive(category="all"){
     
     // Staggered vertical position with huge scatter range
     const r = Math.floor(idx / C);
-    const baseY = r * rowHeight;
+    const baseY = r * rowHeight + startOffsetY;
     const scatterRangeY = isMobile ? 80 : (isTablet ? 160 : 240);
     const offsetY = Math.random() * scatterRangeY - (scatterRangeY / 2);
-    const topY = Math.max(0, baseY + offsetY);
+    const topY = Math.max(10, baseY + offsetY);
     
     // Estimate image height in pixels to set container height
     const estimatedHeight = isMobile ? 220 : (isTablet ? 340 : 460); 
@@ -243,21 +246,13 @@ async function renderArchive(category="all"){
     return card(x, "archive", style);
   }).join("");
 
-  const containerHeight = Math.max(800, maxTopY + (isMobile ? 100 : 250));
+  const containerHeight = Math.max(800, maxTopY + (isMobile ? 80 : 180));
 
   app.innerHTML=`<section class="archive-section">
-    <div class="filters">
-      <button class="filter ${category==="all"?"active":""}" data-cat="all">전체</button>
-      <button class="filter ${category==="눈자리나게, 이어"?"active":""}" data-cat="눈자리나게, 이어">눈자리나게, 이어</button>
-    </div>
     <div class="archive-canvas" style="position: relative; width: 100%; height: ${containerHeight}px;">
       ${cardsHtml || '<p class="empty">이 카테고리에 등록된 작업이 없습니다.</p>'}
     </div>
   </section>`;
-  document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{
-    const cat=btn.dataset.cat;
-    location.hash=cat==="눈자리나게, 이어" ? "#/archive/눈자리나게, 이어" : "#/archive";
-  }));
 }
 
 async function renderDetail(collection, slug){

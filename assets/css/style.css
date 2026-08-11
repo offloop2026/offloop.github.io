@@ -80,10 +80,7 @@ button{font:inherit}
 .card-title{margin:0;font-size:13px}
 .card-meta{margin:0;color:var(--muted);font-size:12px;text-align:right}
 .archive-section {
-  padding-top: 24px;
-}
-.archive-section .filters {
-  margin-bottom: 36px;
+  padding-top: 10px;
 }
 
 /* Freeform Archive Layout */

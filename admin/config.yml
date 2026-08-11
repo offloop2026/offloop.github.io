@@ -11,10 +11,6 @@ display_url: "https://offloop2026.github.io"
 
 collections:
 
-  # ========================================
-  # 전시
-  # ========================================
-
   - name: "exhibitions"
     label: "전시"
     label_singular: "전시"
@@ -23,7 +19,6 @@ collections:
     slug: "{{year}}-{{slug}}"
 
     fields:
-
       - label: "전시명"
         name: "title"
         widget: "string"
@@ -56,11 +51,6 @@ collections:
         widget: "markdown"
         required: false
 
-
-  # ========================================
-  # 아카이브
-  # ========================================
-
   - name: "archive"
     label: "아카이브"
     label_singular: "작품"
@@ -69,7 +59,6 @@ collections:
     slug: "{{year}}-{{slug}}"
 
     fields:
-
       - label: "작품명"
         name: "title"
         widget: "string"

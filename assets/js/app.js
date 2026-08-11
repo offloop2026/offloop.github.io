@@ -201,8 +201,7 @@ async function renderExhibitions(){
 async function renderArchive(category="all"){
   const entries=await getCollection("archive");
   const filtered=category==="all" ? entries : entries.filter(x=>x.data.category===category);
-  app.innerHTML=`<section>
-    <div class="page-head"><h1 class="page-title">ARCHIVE</h1><p class="page-note">작업과 기록</p></div>
+  app.innerHTML=`<section class="archive-section">
     <div class="filters">
       <button class="filter ${category==="all"?"active":""}" data-cat="all">전체</button>
       <button class="filter ${category==="눈자리나게, 이어"?"active":""}" data-cat="눈자리나게, 이어">눈자리나게, 이어</button>

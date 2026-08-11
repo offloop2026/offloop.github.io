@@ -1,0 +1,22 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "photo"
+    label: "사진 아카이브"
+    folder: "content/photos"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "제목", name: "title", widget: "string"}
+      - {label: "날짜", name: "date", widget: "datetime"}
+      - {label: "카테고리", name: "category", widget: "select", options: ["landscape", "architecture", "portrait", "film"]}
+      - {label: "사진 업로드", name: "image", widget: "image"}
+      - {label: "설명", name: "desc", widget: "text"}
+      - {label: "촬영 장소", name: "location", widget: "string"}
+      - {label: "카메라/장비", name: "gear", widget: "string"}
+      - {label: "태그", name: "tags", widget: "list"}

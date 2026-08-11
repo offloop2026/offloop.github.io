@@ -144,11 +144,7 @@ async function renderHome(){
   const archive=await getCollection("archive");
   const latest=archive.slice(0,10);
   app.innerHTML=`<section class="hero"><h1>OFF<br>LOOP</h1></section>
-    <section class="intro">
-      <p>Visual archive of works, exhibitions and collected traces.</p>
-      <p>작업과 전시, 일상의 흔적을 기록합니다.</p>
-    </section>
-    <section>
+    <section class="home-section">
       <div class="page-head"><h2 class="page-title">Archive</h2><p class="page-note">최근 기록</p></div>
       <div class="masonry">${latest.map(x=>card(x,"archive")).join("") || '<p class="empty">아직 등록된 작업이 없습니다.</p>'}</div>
     </section>`;

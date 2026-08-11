@@ -108,7 +108,8 @@ button{font:inherit}
 .detail-description{margin-top:30px;max-width:560px}
 .gallery{columns:2 360px;column-gap:var(--gap)}
 .gallery img{width:100%;height:auto;display:block;margin:0 0 var(--gap);break-inside:avoid}
-.exhibitions-section .page-head {
+.exhibitions-section .page-head,
+.home-section .page-head {
   border-bottom: none;
 }
 .about{max-width:850px;padding:90px 0}

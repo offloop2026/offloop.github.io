@@ -120,10 +120,10 @@ function imageUrl(path){
   return `${RAW}/${path.replace(/^\/+/,"")}`;
 }
 
-function card(entry, collection){
+function card(entry, collection, customStyle=""){
   const d=entry.data;
   const href=`#/work/${collection}/${encodeURIComponent(entry.slug)}`;
-  return `<a class="card" href="${href}">
+  return `<a class="card" href="${href}" style="${customStyle}">
     <div class="card-media">${d.thumbnail ? `<img src="${imageUrl(d.thumbnail)}" alt="${escapeHtml(d.title||"")}" loading="lazy">` : ""}</div>
     <div class="card-info">
       <p class="card-title">${escapeHtml(d.title||"Untitled")}</p>
@@ -201,12 +201,30 @@ async function renderExhibitions(){
 async function renderArchive(category="all"){
   const entries=await getCollection("archive");
   const filtered=category==="all" ? entries : entries.filter(x=>x.data.category===category);
+  
+  const cardsHtml = filtered.map(x => {
+    const isMobile = window.innerWidth <= 600;
+    
+    // Organic scaling (between 0.78 and 1.02)
+    const scale = (0.78 + Math.random() * 0.24).toFixed(2);
+    // Organic rotation (between -4deg and +4deg)
+    const rotate = (Math.random() * 8 - 4).toFixed(1);
+    
+    // Scatter translation offsets
+    const transX = isMobile ? (Math.random() * 8 - 4).toFixed(0) : (Math.random() * 40 - 20).toFixed(0);
+    const transY = isMobile ? (Math.random() * 24 - 12).toFixed(0) : (Math.random() * 80 - 45).toFixed(0);
+    const zIndex = Math.floor(Math.random() * 30) + 1;
+    
+    const style = `transform: translate(${transX}px, ${transY}px) rotate(${rotate}deg) scale(${scale}); z-index: ${zIndex}; position: relative;`;
+    return card(x, "archive", style);
+  }).join("");
+
   app.innerHTML=`<section class="archive-section">
     <div class="filters">
       <button class="filter ${category==="all"?"active":""}" data-cat="all">전체</button>
       <button class="filter ${category==="눈자리나게, 이어"?"active":""}" data-cat="눈자리나게, 이어">눈자리나게, 이어</button>
     </div>
-    <div class="masonry archive-masonry">${filtered.map(x=>card(x,"archive")).join("") || '<p class="empty">이 카테고리에 등록된 작업이 없습니다.</p>'}</div>
+    <div class="masonry archive-masonry">${cardsHtml || '<p class="empty">이 카테고리에 등록된 작업이 없습니다.</p>'}</div>
   </section>`;
   document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{
     const cat=btn.dataset.cat;

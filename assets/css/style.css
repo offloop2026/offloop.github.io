@@ -85,16 +85,18 @@ button{font:inherit}
 .archive-section .filters {
   margin-bottom: 36px;
 }
+
 /* Freeform Archive Layout */
 .archive-masonry {
-  column-count: 3;
-  column-gap: 50px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 130px 40px;
+  align-items: start;
   margin-top: 40px;
 }
 .archive-masonry .card {
   display: block;
-  break-inside: avoid;
-  margin: 0 0 70px;
+  width: 100%;
   transition: opacity 0.3s ease;
 }
 .archive-masonry .card:hover {
@@ -103,55 +105,86 @@ button{font:inherit}
 .archive-masonry .card-info {
   display: none;
 }
-/* Freeform irregular scaling and shifting */
-.archive-masonry .card:nth-child(6n+1) {
-  width: 88%;
-  margin-left: 6%;
-}
-.archive-masonry .card:nth-child(6n+2) {
-  width: 78%;
-  margin-left: 18%;
+/* Freeform organic grid distribution */
+.archive-masonry .card:nth-child(12n+1) {
+  grid-column: 2 / span 4;
   margin-top: 40px;
 }
-.archive-masonry .card:nth-child(6n+3) {
-  width: 95%;
-  margin-left: 0;
+.archive-masonry .card:nth-child(12n+2) {
+  grid-column: 8 / span 3;
 }
-.archive-masonry .card:nth-child(6n+4) {
-  width: 74%;
-  margin-left: 2%;
+.archive-masonry .card:nth-child(12n+3) {
+  grid-column: 4 / span 5;
+  margin-top: -50px;
+}
+.archive-masonry .card:nth-child(12n+4) {
+  grid-column: 1 / span 3;
+  margin-top: 20px;
+}
+.archive-masonry .card:nth-child(12n+5) {
+  grid-column: 6 / span 4;
+}
+.archive-masonry .card:nth-child(12n+6) {
+  grid-column: 11 / span 2;
+  margin-top: 60px;
+}
+.archive-masonry .card:nth-child(12n+7) {
+  grid-column: 3 / span 4;
+}
+.archive-masonry .card:nth-child(12n+8) {
+  grid-column: 8 / span 4;
+  margin-top: -30px;
+}
+.archive-masonry .card:nth-child(12n+9) {
+  grid-column: 1 / span 4;
+  margin-top: 50px;
+}
+.archive-masonry .card:nth-child(12n+10) {
+  grid-column: 6 / span 3;
+}
+.archive-masonry .card:nth-child(12n+11) {
+  grid-column: 10 / span 3;
   margin-top: -20px;
 }
-.archive-masonry .card:nth-child(6n+5) {
-  width: 84%;
-  margin-left: 12%;
-}
-.archive-masonry .card:nth-child(6n+6) {
-  width: 100%;
-  margin-left: 0;
+.archive-masonry .card:nth-child(12n+12) {
+  grid-column: 4 / span 4;
+  margin-top: 30px;
 }
 /* Responsive adjustments */
 @media(max-width: 1024px){
   .archive-masonry {
-    column-count: 2;
-    column-gap: 40px;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 80px 30px;
   }
+  .archive-masonry .card:nth-child(12n+1) { grid-column: 1 / span 3; margin-top: 20px; }
+  .archive-masonry .card:nth-child(12n+2) { grid-column: 5 / span 3; margin-top: 0; }
+  .archive-masonry .card:nth-child(12n+3) { grid-column: 2 / span 4; margin-top: -20px; }
+  .archive-masonry .card:nth-child(12n+4) { grid-column: 7 / span 2; margin-top: 10px; }
+  .archive-masonry .card:nth-child(12n+5) { grid-column: 1 / span 4; margin-top: 0; }
+  .archive-masonry .card:nth-child(12n+6) { grid-column: 6 / span 3; margin-top: 30px; }
+  .archive-masonry .card:nth-child(12n+7) { grid-column: 3 / span 3; margin-top: 0; }
+  .archive-masonry .card:nth-child(12n+8) { grid-column: 7 / span 2; margin-top: -15px; }
+  .archive-masonry .card:nth-child(12n+9) { grid-column: 1 / span 3; margin-top: 20px; }
+  .archive-masonry .card:nth-child(12n+10) { grid-column: 5 / span 4; margin-top: 0; }
+  .archive-masonry .card:nth-child(12n+11) { grid-column: 1 / span 3; margin-top: -10px; }
+  .archive-masonry .card:nth-child(12n+12) { grid-column: 5 / span 3; margin-top: 15px; }
 }
 @media(max-width: 600px){
   .archive-masonry {
-    column-count: 1;
-    column-gap: 0;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 16px;
     margin-top: 20px;
   }
   .archive-masonry .card {
-    margin: 0 0 45px;
+    grid-column: span 1 !important;
+    margin-top: 0 !important;
   }
-  .archive-masonry .card:nth-child(6n+1) { width: 94%; margin-left: 3%; }
-  .archive-masonry .card:nth-child(6n+2) { width: 88%; margin-left: 6%; margin-top: 15px; }
-  .archive-masonry .card:nth-child(6n+3) { width: 100%; margin-left: 0; }
-  .archive-masonry .card:nth-child(6n+4) { width: 85%; margin-left: 5%; margin-top: -10px; }
-  .archive-masonry .card:nth-child(6n+5) { width: 90%; margin-left: 5%; }
-  .archive-masonry .card:nth-child(6n+6) { width: 100%; margin-left: 0; }
+  .archive-masonry .card:nth-child(3n+1) {
+    margin-top: 20px !important;
+  }
+  .archive-masonry .card:nth-child(3n+2) {
+    transform: scale(0.95);
+  }
 }
 
 .detail{padding-top:60px}

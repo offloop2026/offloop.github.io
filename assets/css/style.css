@@ -79,7 +79,75 @@ button{font:inherit}
 .card-info{display:flex;justify-content:space-between;gap:12px;padding:7px 0 14px}
 .card-title{margin:0;font-size:13px}
 .card-meta{margin:0;color:var(--muted);font-size:12px;text-align:right}
-.archive-masonry .card-info{display:none}
+/* Freeform Archive Layout */
+.archive-masonry {
+  column-count: 3;
+  column-gap: 50px;
+  margin-top: 40px;
+}
+.archive-masonry .card {
+  display: block;
+  break-inside: avoid;
+  margin: 0 0 70px;
+  transition: opacity 0.3s ease;
+}
+.archive-masonry .card:hover {
+  opacity: 0.92;
+}
+.archive-masonry .card-info {
+  display: none;
+}
+/* Freeform irregular scaling and shifting */
+.archive-masonry .card:nth-child(6n+1) {
+  width: 88%;
+  margin-left: 6%;
+}
+.archive-masonry .card:nth-child(6n+2) {
+  width: 78%;
+  margin-left: 18%;
+  margin-top: 40px;
+}
+.archive-masonry .card:nth-child(6n+3) {
+  width: 95%;
+  margin-left: 0;
+}
+.archive-masonry .card:nth-child(6n+4) {
+  width: 74%;
+  margin-left: 2%;
+  margin-top: -20px;
+}
+.archive-masonry .card:nth-child(6n+5) {
+  width: 84%;
+  margin-left: 12%;
+}
+.archive-masonry .card:nth-child(6n+6) {
+  width: 100%;
+  margin-left: 0;
+}
+/* Responsive adjustments */
+@media(max-width: 1024px){
+  .archive-masonry {
+    column-count: 2;
+    column-gap: 40px;
+  }
+}
+@media(max-width: 600px){
+  .archive-masonry {
+    column-count: 1;
+    column-gap: 0;
+    margin-top: 20px;
+  }
+  .archive-masonry .card {
+    margin: 0 0 45px;
+  }
+  .archive-masonry .card:nth-child(6n+1) { width: 94%; margin-left: 3%; }
+  .archive-masonry .card:nth-child(6n+2) { width: 88%; margin-left: 6%; margin-top: 15px; }
+  .archive-masonry .card:nth-child(6n+3) { width: 100%; margin-left: 0; }
+  .archive-masonry .card:nth-child(6n+4) { width: 85%; margin-left: 5%; margin-top: -10px; }
+  .archive-masonry .card:nth-child(6n+5) { width: 90%; margin-left: 5%; }
+  .archive-masonry .card:nth-child(6n+6) { width: 100%; margin-left: 0; }
+}
+
 .detail{padding-top:60px}
 .back{color:var(--muted);display:inline-block;margin-bottom:34px}
 .detail-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:50px}

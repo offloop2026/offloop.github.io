@@ -1,14 +1,46 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content Management System</title>
-    <!-- Netlify Identity 스크립트 -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  </head>
-  <body>
-    <!-- Decap CMS 스크립트 -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  </body>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="OFFLOOP — visual archive">
+  <title>OFFLOOP</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#/">OFFLOOP</a>
+    <nav class="nav" aria-label="주 메뉴">
+      <a href="#/about">소개</a>
+      <a href="#/exhibitions">전시</a>
+      <a href="#/archive">아카이브</a>
+    </nav>
+  </header>
+
+  <main id="app" class="site-main">
+    <div class="loading">불러오는 중…</div>
+  </main>
+
+  <footer class="site-footer">
+    <span>OFFLOOP</span>
+    <a href="mailto:hello@example.com">hello@example.com</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
 </html>

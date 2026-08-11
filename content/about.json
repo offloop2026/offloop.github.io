@@ -1,0 +1,9 @@
+{
+  "title": "ABOUT",
+  "name": "OFFLOOP",
+  "paragraphs": [
+    "시각예술 작업과 전시, 아카이브를 기록하는 공간입니다.",
+    "이 페이지의 소개글은 content/about.json 파일에서 쉽게 수정할 수 있습니다.",
+    "Contact — loopoff2026@gmail.com"
+  ]
+}

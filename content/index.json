@@ -1,0 +1,30 @@
+{
+  "archive": [
+    {
+      "slug": "2026-example-work",
+      "filename": "2026-example-work.md",
+      "data": {
+        "title": "작품 제목을 수정하세요",
+        "year": 2026,
+        "category": "눈자리나게",
+        "thumbnail": "",
+        "gallery": [],
+        "description": "이 글은 예시입니다. Decap CMS에서 수정하거나 삭제하세요."
+      }
+    }
+  ],
+  "exhibitions": [
+    {
+      "slug": "2026-example-exhibition",
+      "filename": "2026-example-exhibition.md",
+      "data": {
+        "title": "전시 제목을 수정하세요",
+        "year": 2026,
+        "venue": "전시장소",
+        "thumbnail": "",
+        "gallery": [],
+        "description": "이 글은 예시입니다. Decap CMS에서 수정하거나 삭제하세요."
+      }
+    }
+  ]
+}

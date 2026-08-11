@@ -6,6 +6,7 @@ const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 
 const app = document.getElementById("app");
 const cache = { exhibitions:null, archive:null };
+let indexData = null;
 
 function escapeHtml(value=""){
   return String(value).replace(/[&<>"']/g, c => ({
@@ -13,17 +14,50 @@ function escapeHtml(value=""){
   }[c]));
 }
 
-async function listMarkdown(folder){
+async function fetchIndexJson() {
+  if (indexData) return indexData;
+  try {
+    const res = await fetch("./content/index.json");
+    if (res.ok) {
+      indexData = await res.json();
+      return indexData;
+    }
+  } catch (e) {
+    console.warn("index.json을 불러올 수 없어 GitHub API로 Fallback합니다.", e);
+  }
+  return null;
+}
+
+async function listFiles(folder){
   const res = await fetch(`${API}/${folder}?ref=${BRANCH}`);
   if(!res.ok) throw new Error(`콘텐츠 목록을 불러오지 못했습니다: ${res.status}`);
   const files = await res.json();
-  return files.filter(x => x.type === "file" && x.name.endsWith(".md"));
+  return files.filter(x => x.type === "file" && (x.name.endsWith(".md") || x.name.endsWith(".json")));
 }
 
-async function readMarkdown(path){
+async function readContentFile(path){
   const res = await fetch(`${RAW}/${path}`);
   if(!res.ok) throw new Error(`콘텐츠를 불러오지 못했습니다: ${path}`);
-  return parseFrontmatter(await res.text());
+  const text = await res.text();
+  if(path.endsWith(".json")){
+    try {
+      const data = JSON.parse(text);
+      const mappedData = {
+        title: data.title || "",
+        year: data.year || "",
+        category: data.category || "눈자리나게",
+        venue: data.venue || "",
+        thumbnail: data.image || data.thumbnail || "",
+        gallery: data.gallery || [],
+        description: data.description || ""
+      };
+      return { data: mappedData, body: data.description || "" };
+    } catch(e) {
+      console.error("JSON parsing error", e);
+      return { data: {}, body: text };
+    }
+  }
+  return parseFrontmatter(text);
 }
 
 function parseFrontmatter(text){
@@ -37,11 +71,39 @@ function parseFrontmatter(text){
 
 async function getCollection(type){
   if(cache[type]) return cache[type];
+  
+  // 1. index.json 로딩 시도
+  const index = await fetchIndexJson();
+  if (index && index[type]) {
+    const entries = index[type].map(entry => {
+      const d = entry.data || {};
+      const mappedData = {
+        title: d.title || "",
+        year: d.year || "",
+        category: d.category || "눈자리나게",
+        venue: d.venue || "",
+        thumbnail: d.image || d.thumbnail || "",
+        gallery: d.gallery || [],
+        description: d.description || ""
+      };
+      return {
+        slug: entry.slug,
+        filename: entry.filename,
+        data: mappedData,
+        body: entry.body || d.description || ""
+      };
+    });
+    entries.sort((a,b) => String(b.data.year||"").localeCompare(String(a.data.year||"")));
+    cache[type] = entries;
+    return entries;
+  }
+
+  // 2. Fallback: GitHub API 사용
   const folder = type === "exhibitions" ? "content/exhibitions" : "content/archive";
-  const files = await listMarkdown(folder);
+  const files = await listFiles(folder);
   const entries = await Promise.all(files.map(async file => ({
-    ...await readMarkdown(`${folder}/${file.name}`),
-    slug:file.name.replace(/\.md$/,""),
+    ...await readContentFile(`${folder}/${file.name}`),
+    slug:file.name.replace(/\.(md|json)$/,""),
     filename:file.name
   })));
   entries.sort((a,b) => String(b.data.year||"").localeCompare(String(a.data.year||"")));
@@ -51,7 +113,10 @@ async function getCollection(type){
 
 function imageUrl(path){
   if(!path) return "";
-  if(path.startsWith("http")) return path;
+  if(path.startsWith("http") || path.startsWith("data:")) return path;
+  if(location.hostname === "localhost" || location.hostname === "127.0.0.1"){
+    return path.replace(/^\/+/,"");
+  }
   return `${RAW}/${path.replace(/^\/+/,"")}`;
 }
 
@@ -90,18 +155,39 @@ async function renderHome(){
 }
 
 async function renderAbout(){
-  app.innerHTML=`<section class="about">
-    <h1>ABOUT</h1>
-    <div class="about-grid">
-      <div>OFFLOOP</div>
-      <div class="about-copy">
-        <p>시각예술 작업과 전시, 아카이브를 기록하는 공간입니다.</p>
-        <p>이 페이지의 글은 <strong>index.html</strong>에서 직접 수정할 수 있습니다.</p>
-        <p>작품과 전시는 <strong>/admin/</strong>의 Decap CMS에서 추가·수정합니다.</p>
-        <p>Contact — hello@example.com</p>
+  app.innerHTML = '<div class="loading">불러오는 중…</div>';
+  try {
+    const res = await fetch("./content/about.json");
+    if (!res.ok) throw new Error("소개 정보를 찾을 수 없습니다.");
+    const data = await res.json();
+    const title = data.title || "ABOUT";
+    const name = data.name || "OFFLOOP";
+    const paragraphs = Array.isArray(data.paragraphs) ? data.paragraphs : [];
+    
+    app.innerHTML = `<section class="about">
+      <h1>${escapeHtml(title)}</h1>
+      <div class="about-grid">
+        <div>${escapeHtml(name)}</div>
+        <div class="about-copy">
+          ${paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join("")}
+        </div>
       </div>
-    </div>
-  </section>`;
+    </section>`;
+  } catch (err) {
+    console.error(err);
+    // Fallback: 기존 하드코딩된 내용 표시
+    app.innerHTML = `<section class="about">
+      <h1>ABOUT</h1>
+      <div class="about-grid">
+        <div>OFFLOOP</div>
+        <div class="about-copy">
+          <p>시각예술 작업과 전시, 아카이브를 기록하는 공간입니다.</p>
+          <p>이 페이지의 소개글은 content/about.json 파일에서 쉽게 수정할 수 있습니다.</p>
+          <p>Contact — loopoff2026@gmail.com</p>
+        </div>
+      </div>
+    </section>`;
+  }
 }
 
 async function renderExhibitions(){
@@ -135,7 +221,7 @@ async function renderDetail(collection, slug){
   if(!entry) throw new Error("작업을 찾을 수 없습니다.");
   const d=entry.data;
   const gallery=Array.isArray(d.gallery) ? d.gallery : [];
-  const images=[d.thumbnail,...gallery].filter(Boolean);
+  const images=[d.thumbnail || d.image,...gallery].filter(Boolean);
   const back=collection==="exhibitions" ? "#/exhibitions" : "#/archive";
   app.innerHTML=`<article class="detail">
     <a class="back" href="${back}">← Back</a>

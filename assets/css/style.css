@@ -1,12 +1,12 @@
 :root{
-  --bg:#f5f4ef;
+  --bg:#ffffff;
   --text:#111;
   --muted:#777;
   --line:#d8d6cf;
   --pad:24px;
   --gap:14px;
-  --serif: Georgia, "Times New Roman", serif;
-  --sans: Arial, Helvetica, sans-serif;
+  --serif: "Apple SD Gothic Neo", "AppleGothic", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --sans: "Apple SD Gothic Neo", "AppleGothic", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -24,7 +24,7 @@ button{font:inherit}
   position:sticky;top:0;z-index:20;
   display:flex;justify-content:space-between;align-items:center;
   padding:18px var(--pad);
-  background:rgba(245,244,239,.92);
+  background:rgba(255,255,255,.92);
   backdrop-filter:blur(10px);
   border-bottom:1px solid transparent;
 }
@@ -54,12 +54,23 @@ button{font:inherit}
 .filter{border:0;background:none;padding:0;color:var(--muted);cursor:pointer}
 .filter.active,.filter:hover{color:var(--text);text-decoration:underline;text-underline-offset:4px}
 .masonry{
-  columns:4 260px;column-gap:var(--gap);
+  column-count:3;
+  column-gap:var(--gap);
+}
+@media(max-width:1024px){
+  .masonry{
+    column-count:2;
+  }
+}
+@media(max-width:600px){
+  .masonry{
+    column-count:1;
+  }
 }
 .card{
   display:block;break-inside:avoid;margin:0 0 var(--gap);
 }
-.card-media{background:#e9e7df;overflow:hidden}
+.card-media{background:transparent;overflow:hidden}
 .card-media img{
   width:100%;height:auto;display:block;
   transition:transform .45s ease;

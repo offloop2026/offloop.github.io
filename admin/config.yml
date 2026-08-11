@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: offloop2026/offloop2026.github.io
+  name: git-gateway
   branch: main
 
 media_folder: "assets/images"
@@ -13,54 +12,23 @@ collections:
     folder: "content/exhibitions"
     create: true
     slug: "{{year}}-{{slug}}"
-
     fields:
-      - label: "전시명"
-        name: "title"
-        widget: "string"
-
-      - label: "연도"
-        name: "year"
-        widget: "number"
-
-      - label: "장소"
-        name: "venue"
-        widget: "string"
-
-      - label: "대표 이미지"
-        name: "thumbnail"
-        widget: "image"
-
-      - label: "전시 설명"
-        name: "description"
-        widget: "markdown"
-
+      - {label: "전시명", name: "title", widget: "string"}
+      - {label: "연도", name: "year", widget: "number"}
+      - {label: "장소", name: "venue", widget: "string", required: false}
+      - {label: "대표 이미지", name: "thumbnail", widget: "image"}
+      - {label: "추가 이미지", name: "gallery", widget: "list", field: {label: "이미지", name: "image", widget: "image"}, required: false}
+      - {label: "설명", name: "description", widget: "markdown", required: false}
 
   - name: "archive"
     label: "아카이브"
     folder: "content/archive"
     create: true
     slug: "{{year}}-{{slug}}"
-
     fields:
-      - label: "작품명"
-        name: "title"
-        widget: "string"
-
-      - label: "연도"
-        name: "year"
-        widget: "number"
-
-      - label: "카테고리"
-        name: "category"
-        widget: "select"
-        options:
-          - "눈자리나게"
-
-      - label: "대표 이미지"
-        name: "thumbnail"
-        widget: "image"
-
-      - label: "작품 설명"
-        name: "description"
-        widget: "markdown"
+      - {label: "작품명", name: "title", widget: "string"}
+      - {label: "연도", name: "year", widget: "number"}
+      - {label: "카테고리", name: "category", widget: "select", options: ["눈자리나게"]}
+      - {label: "대표 이미지", name: "thumbnail", widget: "image"}
+      - {label: "추가 이미지", name: "gallery", widget: "list", field: {label: "이미지", name: "image", widget: "image"}, required: false}
+      - {label: "설명", name: "description", widget: "markdown", required: false}

@@ -87,37 +87,19 @@ button{font:inherit}
 }
 
 /* Freeform Archive Layout */
-.archive-masonry {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 120px 48px;
-  align-items: start;
-  margin-top: 40px;
-}
-.archive-masonry .card {
-  display: block;
+.archive-canvas {
+  position: relative;
   width: 100%;
+}
+.archive-canvas .card {
+  display: block;
   transition: opacity 0.3s ease;
 }
-.archive-masonry .card:hover {
+.archive-canvas .card:hover {
   opacity: 0.92;
 }
-.archive-masonry .card-info {
+.archive-canvas .card-info {
   display: none;
-}
-/* Responsive adjustments */
-@media(max-width: 1024px){
-  .archive-masonry {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 80px 32px;
-  }
-}
-@media(max-width: 600px){
-  .archive-masonry {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px 16px;
-    margin-top: 20px;
-  }
 }
 
 .detail{padding-top:60px}

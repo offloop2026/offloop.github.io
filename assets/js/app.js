@@ -202,29 +202,57 @@ async function renderArchive(category="all"){
   const entries=await getCollection("archive");
   const filtered=category==="all" ? entries : entries.filter(x=>x.data.category===category);
   
-  const cardsHtml = filtered.map(x => {
-    const isMobile = window.innerWidth <= 600;
+  const isMobile = window.innerWidth <= 600;
+  const isTablet = window.innerWidth > 600 && window.innerWidth <= 1024;
+  
+  const C = isMobile ? 1 : (isTablet ? 2 : 3);
+  const rowHeight = isMobile ? 240 : (isTablet ? 380 : 480);
+  
+  let maxTopY = 0;
+  
+  const cardsHtml = filtered.map((x, idx) => {
+    let cardWidthPct;
+    if (isMobile) {
+      cardWidthPct = 45 + Math.random() * 25; // 45% to 70%
+    } else if (isTablet) {
+      cardWidthPct = 25 + Math.random() * 18; // 25% to 43%
+    } else {
+      cardWidthPct = 16 + Math.random() * 18; // 16% to 34%
+    }
     
-    // Organic scaling (between 0.78 and 1.02)
-    const scale = (0.78 + Math.random() * 0.24).toFixed(2);
-    // Organic rotation (between -4deg and +4deg)
-    const rotate = (Math.random() * 8 - 4).toFixed(1);
+    // Fully randomized horizontal position (clamped to stay inside viewport)
+    const leftPct = Math.random() * (100 - cardWidthPct);
     
-    // Scatter translation offsets
-    const transX = isMobile ? (Math.random() * 8 - 4).toFixed(0) : (Math.random() * 40 - 20).toFixed(0);
-    const transY = isMobile ? (Math.random() * 24 - 12).toFixed(0) : (Math.random() * 80 - 45).toFixed(0);
-    const zIndex = Math.floor(Math.random() * 30) + 1;
+    // Staggered vertical position with huge scatter range
+    const r = Math.floor(idx / C);
+    const baseY = r * rowHeight;
+    const scatterRangeY = isMobile ? 80 : (isTablet ? 160 : 240);
+    const offsetY = Math.random() * scatterRangeY - (scatterRangeY / 2);
+    const topY = Math.max(0, baseY + offsetY);
     
-    const style = `transform: translate(${transX}px, ${transY}px) rotate(${rotate}deg) scale(${scale}); z-index: ${zIndex}; position: relative;`;
+    // Estimate image height in pixels to set container height
+    const estimatedHeight = isMobile ? 220 : (isTablet ? 340 : 460); 
+    if (topY + estimatedHeight > maxTopY) {
+      maxTopY = topY + estimatedHeight;
+    }
+    
+    const zIndex = Math.floor(Math.random() * 50) + 1;
+    
+    // Apply styling without rotation
+    const style = `position: absolute; left: ${leftPct.toFixed(1)}%; top: ${topY.toFixed(0)}px; width: ${cardWidthPct.toFixed(1)}%; z-index: ${zIndex};`;
     return card(x, "archive", style);
   }).join("");
+
+  const containerHeight = Math.max(800, maxTopY + (isMobile ? 100 : 250));
 
   app.innerHTML=`<section class="archive-section">
     <div class="filters">
       <button class="filter ${category==="all"?"active":""}" data-cat="all">전체</button>
       <button class="filter ${category==="눈자리나게, 이어"?"active":""}" data-cat="눈자리나게, 이어">눈자리나게, 이어</button>
     </div>
-    <div class="masonry archive-masonry">${cardsHtml || '<p class="empty">이 카테고리에 등록된 작업이 없습니다.</p>'}</div>
+    <div class="archive-canvas" style="position: relative; width: 100%; height: ${containerHeight}px;">
+      ${cardsHtml || '<p class="empty">이 카테고리에 등록된 작업이 없습니다.</p>'}
+    </div>
   </section>`;
   document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{
     const cat=btn.dataset.cat;

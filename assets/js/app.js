@@ -207,7 +207,7 @@ async function renderArchive(category="all"){
       <button class="filter ${category==="all"?"active":""}" data-cat="all">전체</button>
       <button class="filter ${category==="눈자리나게, 이어"?"active":""}" data-cat="눈자리나게, 이어">눈자리나게, 이어</button>
     </div>
-    <div class="masonry">${filtered.map(x=>card(x,"archive")).join("") || '<p class="empty">이 카테고리에 등록된 작업이 없습니다.</p>'}</div>
+    <div class="masonry archive-masonry">${filtered.map(x=>card(x,"archive")).join("") || '<p class="empty">이 카테고리에 등록된 작업이 없습니다.</p>'}</div>
   </section>`;
   document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{
     const cat=btn.dataset.cat;

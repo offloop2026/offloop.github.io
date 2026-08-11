@@ -79,6 +79,7 @@ button{font:inherit}
 .card-info{display:flex;justify-content:space-between;gap:12px;padding:7px 0 14px}
 .card-title{margin:0;font-size:13px}
 .card-meta{margin:0;color:var(--muted);font-size:12px;text-align:right}
+.archive-masonry .card-info{display:none}
 .detail{padding-top:60px}
 .back{color:var(--muted);display:inline-block;margin-bottom:34px}
 .detail-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:50px}

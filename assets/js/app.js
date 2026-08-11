@@ -181,9 +181,6 @@ async function renderAbout(){
       <div class="about-grid">
         <div>OFFLOOP</div>
         <div class="about-copy">
-          <p>시각예술 작업과 전시, 아카이브를 기록하는 공간입니다.</p>
-          <p>이 페이지의 소개글은 content/about.json 파일에서 쉽게 수정할 수 있습니다.</p>
-          <p>Contact — loopoff2026@gmail.com</p>
         </div>
       </div>
     </section>`;
@@ -192,7 +189,7 @@ async function renderAbout(){
 
 async function renderExhibitions(){
   const entries=await getCollection("exhibitions");
-  app.innerHTML=`<section>
+  app.innerHTML=`<section class="exhibitions-section">
     <div class="page-head"><h1 class="page-title">EXHIBITIONS</h1><p class="page-note">전시 기록</p></div>
     <div class="masonry">${entries.map(x=>card(x,"exhibitions")).join("") || '<p class="empty">아직 등록된 전시가 없습니다.</p>'}</div>
   </section>`;
@@ -212,18 +209,18 @@ async function renderArchive(category="all"){
   const isMobile = window.innerWidth <= 600;
   const isTablet = window.innerWidth > 600 && window.innerWidth <= 1024;
   
-  const C = isMobile ? 1 : (isTablet ? 2 : 3);
-  const rowHeight = isMobile ? 240 : (isTablet ? 380 : 480);
+  const C = isMobile ? 2 : (isTablet ? 2 : 3);
+  const rowHeight = isMobile ? 160 : (isTablet ? 380 : 480);
   
   // Starting offset to let the first row scatter organically without clipping at 0px
-  const startOffsetY = isMobile ? 10 : (isTablet ? 30 : 40);
+  const startOffsetY = isMobile ? 20 : (isTablet ? 30 : 40);
   
   let maxTopY = 0;
   
   const cardsHtml = shuffled.map((x, idx) => {
     let cardWidthPct;
     if (isMobile) {
-      cardWidthPct = 45 + Math.random() * 25; // 45% to 70%
+      cardWidthPct = 40 + Math.random() * 25; // 40% to 65% width
     } else if (isTablet) {
       cardWidthPct = 25 + Math.random() * 18; // 25% to 43%
     } else {
@@ -236,12 +233,12 @@ async function renderArchive(category="all"){
     // Staggered vertical position with huge scatter range
     const r = Math.floor(idx / C);
     const baseY = r * rowHeight + startOffsetY;
-    const scatterRangeY = isMobile ? 80 : (isTablet ? 160 : 240);
+    const scatterRangeY = isMobile ? 110 : (isTablet ? 160 : 240);
     const offsetY = Math.random() * scatterRangeY - (scatterRangeY / 2);
     const topY = Math.max(10, baseY + offsetY);
     
     // Estimate image height in pixels to set container height
-    const estimatedHeight = isMobile ? 220 : (isTablet ? 340 : 460); 
+    const estimatedHeight = isMobile ? 150 : (isTablet ? 340 : 460); 
     if (topY + estimatedHeight > maxTopY) {
       maxTopY = topY + estimatedHeight;
     }

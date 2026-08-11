@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: offloop2026/offloop2026.github.io
   branch: main
 
 media_folder: "assets/images"

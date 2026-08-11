@@ -1,6 +1,33 @@
 {
   "archive": [
     {
+      "slug": "처마와_케이블_수평추진",
+      "filename": "처마와_케이블_수평추진.json",
+      "data": {
+        "title": "처마와_케이블_수평추진",
+        "category": "눈자리나게",
+        "image": "assets/images/archive/인천개항장_리서치드로잉_01_처마와_케이블_수평추진.jpg"
+      }
+    },
+    {
+      "slug": "석등과_청회색덩어리",
+      "filename": "석등과_청회색덩어리.json",
+      "data": {
+        "title": "석등과_청회색덩어리",
+        "category": "눈자리나게",
+        "image": "assets/images/archive/인천개항장_리서치드로잉_02_석등과_청회색덩어리.jpg"
+      }
+    },
+    {
+      "slug": "수면과_능선",
+      "filename": "수면과_능선.json",
+      "data": {
+        "title": "수면과_능선",
+        "category": "눈자리나게",
+        "image": "assets/images/archive/인천개항장_리서치드로잉_03_수면과_능선.jpg"
+      }
+    },
+    {
       "slug": "2026-example-work",
       "filename": "2026-example-work.md",
       "data": {

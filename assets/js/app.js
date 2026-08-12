@@ -7,6 +7,7 @@ const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}`;
 const app = document.getElementById("app");
 const cache = { exhibitions:null, archive:null };
 let indexData = null;
+let currentArchiveShuffled = [];
 
 function escapeHtml(value=""){
   return String(value).replace(/[&<>"']/g, c => ({
@@ -190,10 +191,10 @@ async function renderArchive(category="all"){
   const filtered=category==="all" ? entries : entries.filter(x=>x.data.category===category);
   
   // Dynamic shuffle of works array (Fisher-Yates)
-  const shuffled = [...filtered];
-  for (let i = shuffled.length - 1; i > 0; i--) {
+  currentArchiveShuffled = [...filtered];
+  for (let i = currentArchiveShuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    [currentArchiveShuffled[i], currentArchiveShuffled[j]] = [currentArchiveShuffled[j], currentArchiveShuffled[i]];
   }
   
   const isMobile = window.innerWidth <= 600;
@@ -207,7 +208,7 @@ async function renderArchive(category="all"){
   
   let maxTopY = 0;
   
-  const cardsHtml = shuffled.map((x, idx) => {
+  const cardsHtml = currentArchiveShuffled.map((x, idx) => {
     let cardWidthPct;
     if (isMobile) {
       cardWidthPct = 40 + Math.random() * 25; // 40% to 65% width
@@ -247,6 +248,105 @@ async function renderArchive(category="all"){
       ${cardsHtml || '<p class="empty">이 카테고리에 등록된 작업이 없습니다.</p>'}
     </div>
   </section>`;
+
+  // Attach click events to open the gallery viewer modal
+  document.querySelectorAll(".archive-canvas .card").forEach((el, index) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      openGalleryViewer(index);
+    });
+  });
+}
+
+function openGalleryViewer(startIndex) {
+  let currentIndex = startIndex;
+  
+  // Create modal element
+  const viewer = document.createElement("div");
+  viewer.className = "gallery-viewer";
+  document.body.appendChild(viewer);
+  
+  // Disable body scroll
+  document.body.style.overflow = "hidden";
+  
+  function updateViewer() {
+    const work = currentArchiveShuffled[currentIndex];
+    if (!work) return;
+    
+    const d = work.data;
+    const descriptionHtml = d.description ? marked.parse(String(d.description)) : "";
+    
+    viewer.innerHTML = `
+      <button class="gv-close" aria-label="Close Viewer">×</button>
+      <button class="gv-prev" aria-label="Previous Work">⟵</button>
+      <div class="gv-content">
+        <div class="gv-media">
+          <img src="${imageUrl(d.thumbnail || d.image)}" alt="${escapeHtml(d.title || "")}" class="gv-image">
+        </div>
+        <div class="gv-info">
+          <h2 class="gv-title">${escapeHtml(d.title || "Untitled")}</h2>
+          <div class="gv-description">${descriptionHtml}</div>
+        </div>
+      </div>
+      <button class="gv-next" aria-label="Next Work">⟶</button>
+    `;
+    
+    viewer.querySelector(".gv-close").addEventListener("click", closeViewer);
+    viewer.querySelector(".gv-prev").addEventListener("click", prevWork);
+    viewer.querySelector(".gv-next").addEventListener("click", nextWork);
+  }
+  
+  function closeViewer() {
+    viewer.remove();
+    document.body.style.overflow = "";
+    window.removeEventListener("keydown", handleKeyDown);
+  }
+  
+  function prevWork() {
+    currentIndex = (currentIndex - 1 + currentArchiveShuffled.length) % currentArchiveShuffled.length;
+    updateViewer();
+  }
+  
+  function nextWork() {
+    currentIndex = (currentIndex + 1) % currentArchiveShuffled.length;
+    updateViewer();
+  }
+  
+  function handleKeyDown(e) {
+    if (e.key === "ArrowLeft") {
+      prevWork();
+    } else if (e.key === "ArrowRight") {
+      nextWork();
+    } else if (e.key === "Escape") {
+      closeViewer();
+    }
+  }
+  
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  viewer.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  
+  viewer.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+  
+  function handleSwipe() {
+    const diff = touchEndX - touchStartX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        prevWork();
+      } else {
+        nextWork();
+      }
+    }
+  }
+  
+  window.addEventListener("keydown", handleKeyDown);
+  updateViewer();
 }
 
 async function renderDetail(collection, slug){

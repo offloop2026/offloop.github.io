@@ -165,3 +165,140 @@ button{font:inherit}
   color: var(--text);
   border-color: var(--text);
 }
+
+/* Gallery Viewer Overlay */
+.gallery-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.gv-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: var(--text);
+  z-index: 10010;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+.gv-close:hover {
+  transform: rotate(90deg);
+}
+
+.gv-prev, .gv-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--text);
+  z-index: 10010;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: 0.5;
+}
+.gv-prev:hover, .gv-next:hover {
+  opacity: 1;
+}
+.gv-prev { left: 24px; }
+.gv-next { right: 24px; }
+
+.gv-content {
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.gv-media {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.gv-image {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.gv-info {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.gv-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+
+.gv-description {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .gallery-viewer {
+    padding: 20px;
+  }
+  .gv-content {
+    gap: 16px;
+  }
+  .gv-image {
+    max-height: 55vh;
+  }
+  .gv-prev, .gv-next {
+    position: fixed;
+    bottom: 20px;
+    top: auto;
+    transform: none;
+    width: 50px;
+    height: 50px;
+    opacity: 0.8;
+  }
+  .gv-prev { left: 20px; }
+  .gv-next { right: 20px; }
+  .gv-close {
+    top: 16px;
+    right: 16px;
+  }
+}

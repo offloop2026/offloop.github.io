@@ -269,6 +269,39 @@ function openGalleryViewer(startIndex) {
   // Disable body scroll
   document.body.style.overflow = "hidden";
   
+  // Render structural elements including thumbnail strip
+  viewer.innerHTML = `
+    <button class="gv-close" aria-label="Close Viewer">×</button>
+    <div class="gv-main-area">
+      <button class="gv-prev" aria-label="Previous Work">⟵</button>
+      <div class="gv-content">
+        <div class="gv-media">
+          <img src="" alt="" class="gv-image">
+        </div>
+        <div class="gv-info">
+          <h2 class="gv-title"></h2>
+          <div class="gv-description"></div>
+        </div>
+      </div>
+      <button class="gv-next" aria-label="Next Work">⟶</button>
+    </div>
+    <div class="gv-thumbnail-strip">
+      ${currentArchiveShuffled.map((work, idx) => `
+        <div class="gv-thumb" data-index="${idx}">
+          <img src="${imageUrl(work.data.thumbnail || work.data.image)}" alt="${escapeHtml(work.data.title || "")}">
+        </div>
+      `).join("")}
+    </div>
+  `;
+  
+  const mainImage = viewer.querySelector(".gv-image");
+  const mainTitle = viewer.querySelector(".gv-title");
+  const mainDesc = viewer.querySelector(".gv-description");
+  const btnClose = viewer.querySelector(".gv-close");
+  const btnPrev = viewer.querySelector(".gv-prev");
+  const btnNext = viewer.querySelector(".gv-next");
+  const thumbs = viewer.querySelectorAll(".gv-thumb");
+  
   function updateViewer() {
     const work = currentArchiveShuffled[currentIndex];
     if (!work) return;
@@ -276,24 +309,20 @@ function openGalleryViewer(startIndex) {
     const d = work.data;
     const descriptionHtml = d.description ? marked.parse(String(d.description)) : "";
     
-    viewer.innerHTML = `
-      <button class="gv-close" aria-label="Close Viewer">×</button>
-      <button class="gv-prev" aria-label="Previous Work">⟵</button>
-      <div class="gv-content">
-        <div class="gv-media">
-          <img src="${imageUrl(d.thumbnail || d.image)}" alt="${escapeHtml(d.title || "")}" class="gv-image">
-        </div>
-        <div class="gv-info">
-          <h2 class="gv-title">${escapeHtml(d.title || "Untitled")}</h2>
-          <div class="gv-description">${descriptionHtml}</div>
-        </div>
-      </div>
-      <button class="gv-next" aria-label="Next Work">⟶</button>
-    `;
+    mainImage.src = imageUrl(d.thumbnail || d.image);
+    mainImage.alt = escapeHtml(d.title || "");
+    mainTitle.innerText = d.title || "Untitled";
+    mainDesc.innerHTML = descriptionHtml;
     
-    viewer.querySelector(".gv-close").addEventListener("click", closeViewer);
-    viewer.querySelector(".gv-prev").addEventListener("click", prevWork);
-    viewer.querySelector(".gv-next").addEventListener("click", nextWork);
+    // Toggle active state in thumbnail strip
+    thumbs.forEach((thumb, idx) => {
+      if (idx === currentIndex) {
+        thumb.classList.add("active");
+        thumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      } else {
+        thumb.classList.remove("active");
+      }
+    });
   }
   
   function closeViewer() {
@@ -344,6 +373,17 @@ function openGalleryViewer(startIndex) {
       }
     }
   }
+  
+  btnClose.addEventListener("click", closeViewer);
+  btnPrev.addEventListener("click", prevWork);
+  btnNext.addEventListener("click", nextWork);
+  
+  thumbs.forEach(thumb => {
+    thumb.addEventListener("click", () => {
+      currentIndex = parseInt(thumb.dataset.index, 10);
+      updateViewer();
+    });
+  });
   
   window.addEventListener("keydown", handleKeyDown);
   updateViewer();

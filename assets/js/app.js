@@ -397,6 +397,20 @@ async function renderDetail(collection, slug){
   const gallery=Array.isArray(d.gallery) ? d.gallery : [];
   const images=[d.thumbnail || d.image,...gallery].filter(Boolean);
   const back=collection==="exhibitions" ? "#/exhibitions" : "#/archive";
+  
+  const isExhibition = collection === "exhibitions";
+  const hasGallery = gallery.length > 0;
+  
+  const galleryHtml = (isExhibition && hasGallery)
+    ? `<div class="exhibition-gallery">
+        ${gallery.map((src, i) => `
+          <div class="exhibition-gallery-item" data-index="${i}">
+            <img src="${imageUrl(src)}" alt="${escapeHtml(d.title || "")} ${i + 1}" loading="lazy">
+          </div>
+        `).join("")}
+      </div>`
+    : `<div class="gallery">${images.map((src, i) => `<img src="${imageUrl(src)}" alt="${escapeHtml(d.title || "")}${images.length > 1 ? ` ${i + 1}` : ""}" loading="${i === 0 ? "eager" : "lazy"}">`).join("")}</div>`;
+
   app.innerHTML=`<article class="detail">
     <a class="back" href="${back}">← Back</a>
     <div class="detail-head">
@@ -408,8 +422,99 @@ async function renderDetail(collection, slug){
         <div class="detail-description">${d.description ? marked.parse(String(d.description)) : ""}</div>
       </div>
     </div>
-    <div class="gallery">${images.map((src,i)=>`<img src="${imageUrl(src)}" alt="${escapeHtml(d.title||"")}${images.length>1?` ${i+1}`:""}" loading="${i===0?"eager":"lazy"}">`).join("")}</div>
+    ${galleryHtml}
   </article>`;
+
+  // Bind Lightbox click handlers if it is an exhibition with gallery images
+  if (isExhibition && hasGallery) {
+    const items = document.querySelectorAll(".exhibition-gallery-item");
+    items.forEach(item => {
+      item.addEventListener("click", () => {
+        const index = parseInt(item.dataset.index, 10);
+        openExhibitionLightbox(gallery, index, d.title || "");
+      });
+    });
+  }
+}
+
+function openExhibitionLightbox(images, startIndex, title) {
+  let currentIndex = startIndex;
+  
+  const lightbox = document.createElement("div");
+  lightbox.className = "exhibition-lightbox";
+  document.body.appendChild(lightbox);
+  
+  document.body.style.overflow = "hidden";
+  
+  function updateLightbox() {
+    const src = images[currentIndex];
+    lightbox.innerHTML = `
+      <button class="el-close" aria-label="Close Lightbox">×</button>
+      <button class="el-prev" aria-label="Previous Image">⟵</button>
+      <div class="el-content">
+        <img src="${imageUrl(src)}" alt="${escapeHtml(title)} - ${currentIndex + 1}" class="el-image">
+      </div>
+      <button class="el-next" aria-label="Next Image">⟶</button>
+      <div class="el-counter">${currentIndex + 1} / ${images.length}</div>
+    `;
+    
+    lightbox.querySelector(".el-close").addEventListener("click", closeLightbox);
+    lightbox.querySelector(".el-prev").addEventListener("click", prevImage);
+    lightbox.querySelector(".el-next").addEventListener("click", nextImage);
+  }
+  
+  function closeLightbox() {
+    lightbox.remove();
+    document.body.style.overflow = "";
+    window.removeEventListener("keydown", handleKeyDown);
+  }
+  
+  function prevImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updateLightbox();
+  }
+  
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    updateLightbox();
+  }
+  
+  function handleKeyDown(e) {
+    if (e.key === "ArrowLeft") {
+      prevImage();
+    } else if (e.key === "ArrowRight") {
+      nextImage();
+    } else if (e.key === "Escape") {
+      closeLightbox();
+    }
+  }
+  
+  // Swiping support for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  lightbox.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  
+  lightbox.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+  
+  function handleSwipe() {
+    const diff = touchEndX - touchStartX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        prevImage();
+      } else {
+        nextImage();
+      }
+    }
+  }
+  
+  window.addEventListener("keydown", handleKeyDown);
+  updateLightbox();
 }
 
 async function router(){
